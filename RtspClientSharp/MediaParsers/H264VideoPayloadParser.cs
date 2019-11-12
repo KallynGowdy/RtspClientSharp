@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using RtspClientSharp.Codecs.Video;
@@ -46,8 +46,12 @@ namespace RtspClientSharp.MediaParsers
         {
             Debug.Assert(byteSegment.Array != null, "byteSegment.Array != null");
 
-            if (!markerBit && timeOffset != _timeOffset)
+            if (!markerBit && timeOffset != _timeOffset) {
+#if DEBUG
+                Console.WriteLine($"[H264VideoPayloadParser] Generate frame from offset: {timeOffset} != {_timeOffset}");
+#endif
                 _h264Parser.TryGenerateFrame();
+            }
             
             _timeOffset = timeOffset;
 
@@ -74,6 +78,9 @@ namespace RtspClientSharp.MediaParsers
                     ParseMTAP(byteSegment, 3, markerBit);
                     break;
                 default:
+#if DEBUG
+                Console.WriteLine($"[H264VideoPayloadParser] Parsing default packet type.");
+#endif
                     _h264Parser.Parse(byteSegment, markerBit);
                     break;
             }
@@ -81,6 +88,9 @@ namespace RtspClientSharp.MediaParsers
 
         public override void ResetState()
         {
+#if DEBUG
+            Console.WriteLine($"[H264VideoPayloadParser] Resetting state.");
+#endif
             _nalStream.Position = 0;
             _h264Parser.ResetState();
             _waitForStartFu = true;
@@ -122,8 +132,12 @@ namespace RtspClientSharp.MediaParsers
                 return;
             }
 
-            if (_waitForStartFu)
+            if (_waitForStartFu) {
+#if DEBUG
+                Console.WriteLine($"[H264VideoPayloadParser] Waiting for start FU packet.");
+#endif
                 return;
+            }
 
             offset += donFieldSize + 1;
 
@@ -145,6 +159,12 @@ namespace RtspClientSharp.MediaParsers
 
             int startOffset = byteSegment.Offset + 1 + donFieldSize;
             int endOffset = byteSegment.Offset + byteSegment.Count;
+
+            if (startOffset >= endOffset) {
+#if DEBUG
+                Console.WriteLine($"[H264VideoPayloadParser] No data to write for STAP packet.");
+#endif
+            }
 
             while (startOffset < endOffset)
             {
@@ -169,6 +189,12 @@ namespace RtspClientSharp.MediaParsers
             int endOffset = byteSegment.Offset + byteSegment.Count;
 
             startOffset += 1 + DecodingOrderNumberFieldSize;
+
+            if (startOffset >= endOffset) {
+#if DEBUG
+                Console.WriteLine($"[H264VideoPayloadParser] No data to write for MTAP packet.");
+#endif
+            }
 
             while (startOffset < endOffset)
             {
