@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using RtspClientSharp.MediaParsers;
 
 namespace RtspClientSharp.Rtp
@@ -36,8 +36,12 @@ namespace RtspClientSharp.Rtp
 
         public void Process(ArraySegment<byte> payloadSegment)
         {
-            if (!RtpPacket.TryParse(payloadSegment, out RtpPacket rtpPacket))
+            if (!RtpPacket.TryParse(payloadSegment, out RtpPacket rtpPacket)) {
+#if DEBUG
+                Console.WriteLine("[RtpStream] Could not parse packet.");
+#endif
                 return;
+            }
 
             if (_rtpSequenceAssembler != null)
                 _rtpSequenceAssembler.ProcessPacket(ref rtpPacket);
