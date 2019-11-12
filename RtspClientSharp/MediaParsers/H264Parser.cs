@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -124,7 +124,7 @@ namespace RtspClientSharp.MediaParsers
         {
             _frameStream.Position = 0;
             _sliceType = -1;
-            _waitForIFrame = true;
+            // _waitForIFrame = true;
         }
 
         private void SlicerOnNalUnitFound(ArraySegment<byte> byteSegment)
