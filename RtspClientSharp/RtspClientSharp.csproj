@@ -38,10 +38,6 @@ More info: https://github.com/BogdanovKirill/RtspClientSharp/issues/49</PackageR
 	<DefineConstants>TRACE;PUBLISH</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-	<DefineConstants>DEBUG</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <DocumentationFile>bin\Release\netstandard2.0\RtspClientSharp.xml</DocumentationFile>
   </PropertyGroup>

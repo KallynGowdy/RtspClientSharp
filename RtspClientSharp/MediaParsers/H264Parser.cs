@@ -49,26 +49,14 @@ namespace RtspClientSharp.MediaParsers
             else
                 ProcessNalUnit(byteSegment, false, ref generateFrame);
 
-            if (generateFrame) {
+            if (generateFrame)
                 TryGenerateFrame();
-            } else {
-#if DEBUG
-                Console.WriteLine("[H264Parser] Marker bit not set.");
-#endif
-            }
         }
 
         public void TryGenerateFrame()
         {
-#if DEBUG
-            Console.WriteLine("[H264Parser] Trying to generate frame.");
-#endif
-            if (_frameStream.Position == 0) {
-#if DEBUG
-                Console.WriteLine("[H264Parser] No frame data.");
-#endif
+            if (_frameStream.Position == 0)
                 return;
-            }
 
             var frameBytes = new ArraySegment<byte>(_frameStream.GetBuffer(), 0, (int)_frameStream.Position);
             _frameStream.Position = 0;
@@ -83,17 +71,8 @@ namespace RtspClientSharp.MediaParsers
                 _updateSpsPpsBytes = false;
             }
 
-            if (_sliceType == -1 || _spsPpsBytes.Length == 0) {
-#if DEBUG
-                if (_spsPpsBytes.Length == 0) {
-                    Console.WriteLine("[H264Parser] No SPS/PPS data.");
-                } else {
-                    Console.WriteLine("[H264Parser] No slice type.");
-                }
-#endif
-
+            if (_sliceType == -1 || _spsPpsBytes.Length == 0)
                 return;
-            }
 
             FrameType frameType = GetFrameType(_sliceType);
             _sliceType = -1;
@@ -106,12 +85,8 @@ namespace RtspClientSharp.MediaParsers
                 return;
             }
 
-            if (frameType != FrameType.IntraFrame) {
-#if DEBUG
-                Console.WriteLine("[H264Parser] Intra frame.");
-#endif
+            if (frameType != FrameType.IntraFrame)
                 return;
-            }
 
             _waitForIFrame = false;
             var byteSegment = new ArraySegment<byte>(_spsPpsBytes);
@@ -129,9 +104,6 @@ namespace RtspClientSharp.MediaParsers
 
         private void SlicerOnNalUnitFound(ArraySegment<byte> byteSegment)
         {
-#if DEBUG
-            Console.WriteLine("[H264Parser] Sliced off the start marker");
-#endif
             bool generateFrame = false;
             ProcessNalUnit(byteSegment, true, ref generateFrame);
         }
@@ -153,18 +125,12 @@ namespace RtspClientSharp.MediaParsers
 
             if (nalUnitType == 7)
             {
-#if DEBUG
-                Console.WriteLine($"[H264Parser] Parse SPS");
-#endif
                 ParseSps(byteSegment, hasStartMarker);
                 return;
             }
 
             if (nalUnitType == 8)
             {
-#if DEBUG
-                Console.WriteLine($"[H264Parser] Parse PPS");
-#endif
                 ParsePps(byteSegment, hasStartMarker);
                 return;
             }
@@ -172,18 +138,11 @@ namespace RtspClientSharp.MediaParsers
             if (_sliceType == -1 && (nalUnitType == 5 || nalUnitType == 1))
                 _sliceType = GetSliceType(byteSegment, hasStartMarker);
 
-            if (nri || nalUnitType == 6) {
-#if DEBUG
-                Console.WriteLine($"[H264Parser] NRI or nalUnitTYpe == 6 ({nri}, {nalUnitType} == 6)");
-#endif
+            if (nri || nalUnitType == 6)
                 return;
-            }
 
             if (generateFrame && (hasStartMarker || byteSegment.Offset >= StartMarkerSegment.Count) && _frameStream.Position == 0)
             {
-#if DEBUG
-                Console.WriteLine($"[H264Parser] Generate frame flag was set. Has Start marker: {hasStartMarker}");
-#endif
                 if (!hasStartMarker)
                 {
                     int newOffset = byteSegment.Offset - StartMarkerSegment.Count;
@@ -199,10 +158,6 @@ namespace RtspClientSharp.MediaParsers
             }
             else
             {
-#if DEBUG
-                Console.WriteLine($"[H264Parser] Writing {byteSegment.Count} bytes to stream.");
-#endif
-
                 if (!hasStartMarker)
                     _frameStream.Write(StartMarkerSegment.Array, StartMarkerSegment.Offset, StartMarkerSegment.Count);
 
