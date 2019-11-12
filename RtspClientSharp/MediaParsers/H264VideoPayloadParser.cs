@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using RtspClientSharp.Codecs.Video;
@@ -7,7 +7,7 @@ using RtspClientSharp.Utils;
 
 namespace RtspClientSharp.MediaParsers
 {
-    class H264VideoPayloadParser : MediaPayloadParser
+    public class H264VideoPayloadParser : MediaPayloadParser
     {
         enum PackModeType
         {

@@ -4,7 +4,7 @@ using RtspClientSharp.Utils;
 
 namespace RtspClientSharp.Rtp
 {
-    class RtpSequenceAssembler : IRtpSequenceAssembler
+    public class RtpSequenceAssembler : IRtpSequenceAssembler
     {
         private readonly ChunksArray _chunksArray;
         private readonly int _maxCorrectionLength;

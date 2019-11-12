@@ -2,7 +2,7 @@
 
 namespace RtspClientSharp.Sdp
 {
-    class RtspMediaTrackInfo : RtspTrackInfo
+    public class RtspMediaTrackInfo : RtspTrackInfo
     {
         public CodecInfo Codec { get; }
         public int SamplesFrequency { get; }

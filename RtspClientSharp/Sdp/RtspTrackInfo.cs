@@ -1,6 +1,6 @@
 ﻿namespace RtspClientSharp.Sdp
 {
-    abstract class RtspTrackInfo
+    public abstract class RtspTrackInfo
     {
         public string TrackName { get; }
 

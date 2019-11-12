@@ -4,7 +4,7 @@ using RtspClientSharp.Utils;
 
 namespace RtspClientSharp.Rtp
 {
-    struct RtpPacket
+    public struct RtpPacket
     {
         public const int RtpHeaderSize = 12;
         public const int RtpProtocolVersion = 2;

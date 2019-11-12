@@ -11,7 +11,7 @@ using RtspClientSharp.Utils;
 
 namespace RtspClientSharp.Sdp
 {
-    class SdpParser
+    public class SdpParser
     {
         private class PayloadFormatInfo
         {

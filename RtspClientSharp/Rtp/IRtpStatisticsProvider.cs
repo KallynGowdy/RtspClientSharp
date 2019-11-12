@@ -1,6 +1,6 @@
 ﻿namespace RtspClientSharp.Rtp
 {
-    interface IRtpStatisticsProvider
+    public interface IRtpStatisticsProvider
     {
         uint SyncSourceId { get; }
 

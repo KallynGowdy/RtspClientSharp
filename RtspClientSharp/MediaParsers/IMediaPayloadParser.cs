@@ -3,7 +3,7 @@ using RtspClientSharp.RawFrames;
 
 namespace RtspClientSharp.MediaParsers
 {
-    interface IMediaPayloadParser
+    public interface IMediaPayloadParser
     {
         Action<RawFrame> FrameGenerated { get; set; }
 

@@ -1,8 +1,9 @@
-﻿using RtspClientSharp.Utils;
+﻿
+using RtspClientSharp.Utils;
 
 namespace RtspClientSharp.Rtp
 {
-    internal interface IRtpSequenceAssembler
+    public interface IRtpSequenceAssembler
     {
         RefAction<RtpPacket> PacketPassed { get; set; }
 

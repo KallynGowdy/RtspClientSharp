@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using RtspClientSharp.MediaParsers;
 
 namespace RtspClientSharp.Rtp
 {
-    class RtpStream : ITransportStream, IRtpStatisticsProvider
+    public class RtpStream : ITransportStream, IRtpStatisticsProvider
     {
         private readonly IRtpSequenceAssembler _rtpSequenceAssembler;
         private readonly IMediaPayloadParser _mediaPayloadParser;

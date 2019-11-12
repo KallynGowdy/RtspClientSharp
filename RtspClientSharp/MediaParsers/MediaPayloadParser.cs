@@ -6,7 +6,7 @@ using RtspClientSharp.RawFrames;
 
 namespace RtspClientSharp.MediaParsers
 {
-    abstract class MediaPayloadParser : IMediaPayloadParser
+    public abstract class MediaPayloadParser : IMediaPayloadParser
     {
         private DateTime _baseTime = DateTime.MinValue;
 

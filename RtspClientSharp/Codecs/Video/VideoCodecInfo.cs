@@ -1,6 +1,6 @@
 ﻿namespace RtspClientSharp.Codecs.Video
 {
-    abstract class VideoCodecInfo : CodecInfo
+    public abstract class VideoCodecInfo : CodecInfo
     {
     }
 }
