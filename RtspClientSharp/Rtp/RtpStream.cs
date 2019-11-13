@@ -57,7 +57,7 @@ namespace RtspClientSharp.Rtp
             {
                 int delta = (ushort) (rtpPacket.SeqNumber - _previousSeqNumber);
 
-                if (delta != 1)
+                if (delta > 1)
                 {
                     int lostCount = delta - 1;
 
