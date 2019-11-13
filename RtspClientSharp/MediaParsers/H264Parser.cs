@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -99,16 +99,23 @@ namespace RtspClientSharp.MediaParsers
             _sliceType = -1;
             DateTime frameTimestamp;
 
-            if (frameType == FrameType.PredictionFrame && !_waitForIFrame)
+            if (frameType == FrameType.PredictionFrame)
             {
-                frameTimestamp = _frameTimestampProvider();
-                FrameGenerated?.Invoke(new RawH264PFrame(frameTimestamp, frameBytes));
-                return;
+                if (!_waitForIFrame)
+                {
+                    frameTimestamp = _frameTimestampProvider();
+                    FrameGenerated?.Invoke(new RawH264PFrame(frameTimestamp, frameBytes));
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("[H264Parser] Skipping PFrame because waiting for IFrame");
+                }
             }
 
             if (frameType != FrameType.IntraFrame) {
 #if DEBUG
-                Console.WriteLine("[H264Parser] Intra frame.");
+                Console.WriteLine("[H264Parser] Not IFrame " + frameType);
 #endif
                 return;
             }
